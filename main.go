@@ -70,6 +70,17 @@ func randomizeColors(pixels [][]pixel) [][]pixel {
 	return pixels
 }
 
+func drawRect(pixels [][]pixel, x, y, w, h int) [][]pixel {
+	for j := 0; j < h; j++ {
+		for i := 0; i < w; i++ {
+			pixels[x+i][y+j].b = 255
+			pixels[x+i][y+j].g = 0
+			pixels[x+i][y+j].r = 0
+		}
+	}
+	return pixels
+}
+
 // BMP ...
 type BMP struct {
 	ID     string
@@ -104,7 +115,7 @@ func main() {
 
 	pixelData := createEmpty(width, height)
 	pixelData = randomizeColors(pixelData)
-	// pixelData = drawRect(pixelData, 10, 10, 50, 100)
+	pixelData = drawRect(pixelData, 10, 10, 50, 100)
 
 	pixels := make([]byte, 0)
 	padding := 0
