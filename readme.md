@@ -13,6 +13,38 @@ A simple **BMP creation** and edition go library.
 - coloring method: setColor,
 - reading of the simplest type of BMP possible (so it probably won't work with a random .bmp you found).
 
+## Usage
+
+Creating and editing a BMP file:
+
+```go
+import (
+	"github.com/bmp"
+)
+
+img := bmp.NewImage(800, 600)
+
+bmp.SetColor(255, 255, 255)
+bmp.DrawRect(img.Pixels, 0, 0, 800, 600)
+
+img.Save("white_square.bmp")
+```
+
+Opening and editing a BMP file:
+
+```go
+import (
+	"github.com/bmp"
+)
+
+img := image.Open("./image.bmp")
+
+bmp.SetColor(0, 255, 0)
+bmp.DrawPoint(img.Pixels, 10, 10)
+
+img.Save("edited.bmp")
+```
+
 #### Type of BMP outputed
 
 - ID: BM
