@@ -1,5 +1,9 @@
 package bmp
 
+import (
+	"encoding/binary"
+)
+
 // BMP ...
 type BMP struct {
 	ID     string
@@ -14,4 +18,10 @@ func (bmp BMP) asBytes() []byte {
 	bmpBytes = append(bmpBytes, toPadded(0, 4)...)
 	bmpBytes = append(bmpBytes, toPadded(bmp.offset, 4)...)
 	return bmpBytes
+}
+
+func (bmp *BMP) fromBytes(bytes []byte) {
+	bmp.ID = string(bytes[:2])
+	bmp.size = int(binary.LittleEndian.Uint16(bytes[2:6]))
+	bmp.offset = int(binary.LittleEndian.Uint16(bytes[10:14]))
 }

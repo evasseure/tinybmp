@@ -1,5 +1,7 @@
 package bmp
 
+import "encoding/binary"
+
 // DIB ...
 type DIB struct {
 	bytes           int
@@ -29,4 +31,18 @@ func (dib DIB) asBytes() []byte {
 	dibBytes = append(dibBytes, toPadded(dib.paletteColors, 4)...)
 	dibBytes = append(dibBytes, toPadded(dib.importantColors, 4)...)
 	return dibBytes
+}
+
+func (dib *DIB) fromBytes(bytes []byte) {
+	dib.bytes = int(binary.LittleEndian.Uint16(bytes[14:18]))
+	dib.width = int(binary.LittleEndian.Uint16(bytes[18:22]))
+	dib.height = int(binary.LittleEndian.Uint16(bytes[22:26]))
+	dib.colorPlanes = int(binary.LittleEndian.Uint16(bytes[26:28]))
+	dib.bitsPerPixel = int(binary.LittleEndian.Uint16(bytes[28:30]))
+	dib.compression = int(binary.LittleEndian.Uint16(bytes[30:34]))
+	dib.pixelsSize = int(binary.LittleEndian.Uint16(bytes[34:38]))
+	dib.resolutionX = int(binary.LittleEndian.Uint16(bytes[38:42]))
+	dib.resolutionY = int(binary.LittleEndian.Uint16(bytes[42:46]))
+	dib.paletteColors = int(binary.LittleEndian.Uint16(bytes[46:50]))
+	dib.importantColors = int(binary.LittleEndian.Uint16(bytes[50:54]))
 }
