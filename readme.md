@@ -10,7 +10,7 @@ A simple **BMP creation** and edition go library.
   - line,
   - rectangle,
   - circle,
-- coloring method: setColor,
+- set colors,
 - reading of the simplest type of BMP possible (so it probably won't work with a random .bmp you found).
 
 ## Usage
@@ -25,6 +25,9 @@ import (
 img := bmp.NewImage(800, 600)
 
 bmp.SetColor(255, 255, 255)
+bmp.DrawFilledRect(img.Pixels, 0, 0, 800, 600)
+
+bmp.SetColor(0, 0, 255)
 bmp.DrawRect(img.Pixels, 0, 0, 800, 600)
 
 img.Save("white_square.bmp")

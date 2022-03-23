@@ -1,6 +1,5 @@
 # Todo
 
-[ ] Draw line
-[ ] Draw empty rect
-[ ] Set stroke color
+[X] Draw line
+[X] Draw empty rect
 [ ] Better handling of different BMP header types
