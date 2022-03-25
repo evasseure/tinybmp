@@ -1,6 +1,7 @@
-# BMP
+# TinyBMP
 
-A simple **BMP creation** and edition go library.
+A simple **BMP creation** and edition go library.  
+ℹ️ For now this is only a toy project.
 
 ## Features
 
@@ -10,7 +11,7 @@ A simple **BMP creation** and edition go library.
   - line,
   - rectangle,
   - circle,
-- set colors,
+- set color,
 - reading of the simplest type of BMP possible (so it probably won't work with a random .bmp you found).
 
 ## Usage
@@ -19,16 +20,16 @@ Creating and editing a BMP file:
 
 ```go
 import (
-	"github.com/bmp"
+	"github.com/evasseure/tinybmp"
 )
 
-img := bmp.NewImage(800, 600)
+img := tinybmp.NewImage(800, 600)
 
-bmp.SetColor(255, 255, 255)
-bmp.DrawFilledRect(img.Pixels, 0, 0, 800, 600)
+tinybmp.SetColor(255, 255, 255)
+tinybmp.DrawFilledRect(img.Pixels, 0, 0, 800, 600)
 
-bmp.SetColor(0, 0, 255)
-bmp.DrawRect(img.Pixels, 0, 0, 800, 600)
+tinybmp.SetColor(0, 0, 255)
+tinybmp.DrawRect(img.Pixels, 10, 10, 800 - 20, 600 - 20)
 
 img.Save("white_square.bmp")
 ```
@@ -37,36 +38,58 @@ Opening and editing a BMP file:
 
 ```go
 import (
-	"github.com/bmp"
+	"github.com/evasseure/tinybmp"
 )
 
-img := image.Open("./image.bmp")
+img := tinybmp.Open("./image.bmp")
 
-bmp.SetColor(0, 255, 0)
-bmp.DrawPoint(img.Pixels, 10, 10)
+tinybmp.SetColor(0, 255, 0)
+tinybmp.DrawPoint(img.Pixels, 10, 10)
 
 img.Save("edited.bmp")
 ```
 
-#### Type of BMP outputed
+## "Documentation"
 
-- ID: BM
-- DIB type: BITMAPINFOHEADER
-- Compression: BI_RGB, so no compression
+### Image
 
-## Notes
+```golang
+type Image struct {
+	Width  int
+	Height int
+	Pixels [][]Pixel
+}
 
-#### Padding of scan lines
+func (image Image) Save(filename string)
+    Save save the image in a file
 
-Padding bytes (not necessarily 0) must be appended to the end of the rows in order to bring up the length of the rows to a multiple of four bytes.
-When the pixel array is loaded into memory, each row must begin at a memory address that is a multiple of 4. This address/offset restriction is mandatory only for Pixel Arrays loaded in memory. For file storage purposes, only the size of each row must be a multiple of 4 bytes while the file offset can be arbitrary.
-A 24-bit bitmap with Width=1, would have 3 bytes of data per row (blue, green, red) and 1 byte of padding, while Width=2 would have 6 bytes of data and 2 bytes of padding, Width=3 would have 9 bytes of data and 3 bytes of padding, and Width=4 would have 12 bytes of data and no padding.
+```
 
----
+### Image creation
 
-## Ressources
+```golang
+func NewImage(w, h int) Image
+    NewImage creates a new Image with width and height (w, h)
 
-https://dotink.co/posts/bmp/
-https://en.wikipedia.org/wiki/BMP_file_format
-https://medium.com/sysf/bits-to-bitmaps-a-simple-walkthrough-of-bmp-image-format-765dc6857393
-http://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
+func Open(filename string) Image
+    Open a file at path "filename" and returns an Image
+```
+
+### Drawing functions
+
+```golang
+func SetColor(r, g, b int)
+    SetColor sets the color used for drawing
+
+func DrawFilledRect(pixels [][]Pixel, x, y, w, h int) [][]Pixel
+    DrawFilledRect draw a filled rectangle at (x, y) with (w, h) width and height
+
+func DrawLine(pixels [][]Pixel, x1, y1, x2, y2 int) [][]Pixel
+    DrawLine draw a line from (x1, y1) to (x2, y2)
+
+func DrawPoint(pixels [][]Pixel, x, y int)
+    DrawPoint sets the pixel with (r, g, b)
+
+func DrawRect(pixels [][]Pixel, x, y, w, h int) [][]Pixel
+    DrawRect draw a empty rectangle at (x, y) with (w, h) width and height
+```
