@@ -2,7 +2,7 @@ package bmp
 
 import "encoding/binary"
 
-// DIB ...
+// DIB represent the DIB header of the file
 type DIB struct {
 	bytes           int
 	width           int

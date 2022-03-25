@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 )
 
-// BMP ...
+// BMP represent the BMP header of the file
 type BMP struct {
 	ID     string
 	size   int

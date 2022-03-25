@@ -108,7 +108,7 @@ func (image *Image) Open(filename string) {
 	image.Height = dib.height
 }
 
-// Save ...
+// Save save the image in a file
 func (image Image) Save(filename string) {
 	pixels, padding := image.asBytes()
 
