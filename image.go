@@ -1,18 +1,18 @@
-package bmp
+package tinybmp
 
 import (
 	"encoding/hex"
 	"os"
 )
 
-// Pixel ...
+// Pixel an RGB representation of a pixel
 type Pixel struct {
 	R int
 	G int
 	B int
 }
 
-// Image ...
+// Image represents a bmp image
 type Image struct {
 	Width  int
 	Height int
@@ -61,8 +61,8 @@ func (image *Image) asBytes() ([]byte, int) {
 	return pixels, padding
 }
 
-// Open ...
-func (image *Image) Open(filename string) {
+// Open a file at path "filename" and returns an Image
+func Open(filename string) Image {
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		panic(err)
@@ -103,9 +103,7 @@ func (image *Image) Open(filename string) {
 		}
 	}
 
-	image.Pixels = array
-	image.Width = dib.width
-	image.Height = dib.height
+	return Image{dib.width, dib.height, array}
 }
 
 // Save save the image in a file

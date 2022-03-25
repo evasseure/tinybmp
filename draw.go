@@ -1,4 +1,4 @@
-package bmp
+package tinybmp
 
 import (
 	"math"
@@ -17,7 +17,6 @@ func SetColor(r, g, b int) {
 
 // DrawPoint sets the pixel with (r, g, b)
 func DrawPoint(pixels [][]Pixel, x, y int) {
-	checkIndexes(pixels, x, y)
 	pixels[x][y].R = colorR
 	pixels[x][y].G = colorG
 	pixels[x][y].B = colorB
@@ -45,7 +44,6 @@ func DrawFilledRect(pixels [][]Pixel, x, y, w, h int) [][]Pixel {
 }
 
 // DrawLine draw a line from (x1, y1) to (x2, y2)
-// Taken from https://jstutorial.medium.com/how-to-code-your-first-algorithm-draw-a-line-ca121f9a1395
 func DrawLine(pixels [][]Pixel, x1, y1, x2, y2 int) [][]Pixel {
 	var x, y, xe, ye int
 

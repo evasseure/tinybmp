@@ -1,4 +1,4 @@
-package bmp
+package tinybmp
 
 import (
 	"encoding/binary"
